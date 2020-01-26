@@ -9,11 +9,12 @@ class scrap:
     def __init__(self):
         self.play_link=""
         try:
+           #this function only work on linux 
            self.os_name=os.uname()
         except:
             self.os_name="windows"
         while(not self.play_link):
-            self.play_link=input("Enter the link for playlist")
+            self.play_link=str(input("Enter the link for playlist"))
         self.search()
     def search(self):
         self.vid_src=[]
@@ -27,8 +28,10 @@ class scrap:
             msg=soup(html_code,"html.parser")
             for link in msg.find_all('a',{"class":"spf-link playlist-video clearfix yt-uix-sessionlink spf-link"}):
                     self.vid_src.append(self.tube_link+link["href"])
-                    
-            self.no_video=int(input("Enter the video number to download(default=1)"))
+            try:
+              self.no_video=int(input("Enter the video number to download from (default=1)"))
+            except:
+                print("Enter a number......");
             #getting input for no of video 
             if(self.no_video>len(self.vid_src) or( self.no_video<0)):
                             print("Out of range")
@@ -39,14 +42,20 @@ class scrap:
         
         
     def chrome_browser(self,error=0,):
+        linux,window=[0,0]
         if(error==0): 
                 try:
-                 if( self.os_name=="windows"):
-                    self.driver=webdriver.Chrome(os.getcwd()+"\\chromedriverw.exe")
+                 if(not self.os_name=="windows"):
+                    linux=1 
+                    self.driver=webdriver.Chrome(os.getcwd()+"/driver/chromedriverl")
                  else:
-                    self.driver=webdriver.Chrome(os.getcwd()+"/chromedriverl") 
+                    window=1
+                    self.driver=webdriver.Chrome(os.getcwd()+"\\driver\\chromedriverw.exe") 
                 except:
-                    print("Chrome drive not found")
+                    if(linux==1):
+                          print("Chrome drive not found for linux ")
+                    else:
+                         print("Chrome drive not found for windows ")
 
         #to find link entry input box
         try:
@@ -77,15 +86,15 @@ class scrap:
                 except  :
                     print(i)
                     try:
-                        if( self.os_name=="windows"):
-                            f=open("logfiles\\video link.txt","a")
+                        if(not self.os_name=="windows"):
+                            f=open("/log/video_link.txt","a")
                         else:       
-                            f=open("logfiles/video link.txt","a")
+                            f=open("\\log\\video_link.txt","a")
                     except:
-                         if( self.os_name=="windows"):
-                            f=open("logfiles\\video link.txt","w")
+                         if(not self.os_name=="windows"):
+                            f=open("/log/video link.txt","w")
                          else:       
-                            f=open("logfiles/video link.txt","w")
+                            f=open("\\log\\video link.txt","w")
                     print("Link Not Found You Try To Download 360 Mp4 Video")
                     f.write("\n")
                     f.write(i)
