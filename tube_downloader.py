@@ -8,6 +8,10 @@ import sys
 class scrap:
     def __init__(self):
         self.play_link=""
+        try:
+           self.os_name=os.uname()
+        except:
+            self.os_name="linux"
         while(not self.play_link):
             self.play_link=input("Enter the link for playlist")
         self.search()
@@ -37,7 +41,10 @@ class scrap:
     def chrome_browser(self,error=0,):
         if(error==0): 
                 try:
-                 self.driver=webdriver.Chrome(os.getcwd()+"\\chromedriver.exe")
+                 if(not self.os_name=="linux"):
+                    self.driver=webdriver.Chrome(os.getcwd()+"\\chromedriverw.exe")
+                 else:
+                    self.driver=webdriver.Chrome(os.getcwd()+"/chromedriverl") 
                 except:
                     print("Chrome drive not found")
 
@@ -70,9 +77,15 @@ class scrap:
                 except  :
                     print(i)
                     try:
-                       f=open("logfiles/video link.txt","a")
+                        if(not self.os_name=="linux"):
+                            f=open("logfiles\\video link.txt","a")
+                        else:       
+                            f=open("logfiles/video link.txt","a")
                     except:
-                        f=open("logfiles/video link.txt","w")
+                         if(not self.os_name=="linux"):
+                            f=open("logfiles\\video link.txt","w")
+                         else:       
+                            f=open("logfiles/video link.txt","w")
                     print("Link Not Found You Try To Download 360 Mp4 Video")
                     f.write("\n")
                     f.write(i)
