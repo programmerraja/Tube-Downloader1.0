@@ -87,14 +87,14 @@ class scrap:
                     print(i)
                     try:
                         if(not self.os_name=="windows"):
-                            f=open("/log/video_link.txt","a")
+                            f=open("log/video_link.txt","a")
                         else:       
-                            f=open("\\log\\video_link.txt","a")
+                            f=open("log\\video_link.txt","a")
                     except:
                          if(not self.os_name=="windows"):
-                            f=open("/log/video link.txt","w")
+                            f=open("log/video link.txt","w")
                          else:       
-                            f=open("\\log\\video link.txt","w")
+                            f=open("log\\video link.txt","w")
                     print("Link Not Found You Try To Download 360 Mp4 Video")
                     f.write("\n")
                     f.write(i)
