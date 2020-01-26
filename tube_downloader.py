@@ -11,7 +11,7 @@ class scrap:
         try:
            self.os_name=os.uname()
         except:
-            self.os_name="linux"
+            self.os_name="windows"
         while(not self.play_link):
             self.play_link=input("Enter the link for playlist")
         self.search()
@@ -28,7 +28,7 @@ class scrap:
             for link in msg.find_all('a',{"class":"spf-link playlist-video clearfix yt-uix-sessionlink spf-link"}):
                     self.vid_src.append(self.tube_link+link["href"])
                     
-            self.no_video=int(input("Enter the video number   to download(default=0)"))
+            self.no_video=int(input("Enter the video number to download(default=1)"))
             #getting input for no of video 
             if(self.no_video>len(self.vid_src) or( self.no_video<0)):
                             print("Out of range")
@@ -41,7 +41,7 @@ class scrap:
     def chrome_browser(self,error=0,):
         if(error==0): 
                 try:
-                 if(not self.os_name=="linux"):
+                 if( self.os_name=="windows"):
                     self.driver=webdriver.Chrome(os.getcwd()+"\\chromedriverw.exe")
                  else:
                     self.driver=webdriver.Chrome(os.getcwd()+"/chromedriverl") 
@@ -77,12 +77,12 @@ class scrap:
                 except  :
                     print(i)
                     try:
-                        if(not self.os_name=="linux"):
+                        if( self.os_name=="windows"):
                             f=open("logfiles\\video link.txt","a")
                         else:       
                             f=open("logfiles/video link.txt","a")
                     except:
-                         if(not self.os_name=="linux"):
+                         if( self.os_name=="windows"):
                             f=open("logfiles\\video link.txt","w")
                          else:       
                             f=open("logfiles/video link.txt","w")
